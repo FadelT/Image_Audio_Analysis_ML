@@ -1,0 +1,19 @@
+FROM public.ecr.aws/lambda/python:3.9
+
+
+COPY Calculs_jours/app.py ${LAMBDA_TASK_ROOT}/
+COPY    fonctions_metier/calcul_solaire.py ${LAMBDA_TASK_ROOT}/
+COPY    fonctions_metier/fonctions_reconnaissance_tirages.py ${LAMBDA_TASK_ROOT}/
+COPY    fonctions_metier/analyse_tirages.py ${LAMBDA_TASK_ROOT}/
+COPY    fonctions_metier/fonctions_calculs_horaires.py ${LAMBDA_TASK_ROOT}/
+COPY    fonctions_metier/fonctions_SQL.py ${LAMBDA_TASK_ROOT}/
+COPY    fonctions_metier/reformate_donnees_minute.py ${LAMBDA_TASK_ROOT}/
+COPY    Calculs_jours/requirements.txt ${LAMBDA_TASK_ROOT}/
+
+RUN python3.9 -m pip install -r requirements.txt --target "${LAMBDA_TASK_ROOT}"
+
+# Quick hack to enable Pycharm debug
+RUN ln -s . Calculs_jours
+
+# Command can be overwritten by providing a different command in the template directly.
+CMD ["app.lambda_handler"]
