@@ -9,11 +9,9 @@ opencv-python==4.5.5.64
 streamlit==1.9.0
 streamlit-webrtc==0.37.0
 opencv-contrib-python==4.5.5.64
-click==7.1.2
 librosa==0.8.0
 sounddevice==0.4.1
 wavio==0.0.4
-sounddevice==0.4.1
 SpeechRecognition==3.8.1
 gtts==2.2.4
 boto3==1.23.4
