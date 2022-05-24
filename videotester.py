@@ -12,6 +12,7 @@ import numpy as np
 from deepface import DeepFace
 import time
 
+curdir=os.path.abspath(os.getcwd())
 # load model
 #model = load_model("best_model.h5")
 #model=load_model('model_v6_23.hdf5')
@@ -19,7 +20,7 @@ import time
 
 #face_haar_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
 #face_haar_cascade=cv2.CascadeClassifier('C:/Users/user/Desktop/LastOne/haarcascade_frontalface_default.xml')
-face_haar_cascade=cv2.CascadeClassifier('/tmp/haarcascade_frontalface_default.xml')
+face_haar_cascade=cv2.CascadeClassifier('{}/haarcascade_frontalface_default.xml'.format(curdir))
 
 
 def analyze(img):
@@ -31,7 +32,7 @@ def analyze(img):
     #if not ret:
         #   continue
     gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    cv2.imwrite("img5.jpg", gray_img)
+    cv2.imwrite("{}/img5.jpg".format(curdir), gray_img)
     
     faces_detected = face_haar_cascade.detectMultiScale(gray_img, 1.05, 5)
     print('faceeee')
@@ -50,11 +51,11 @@ def analyze(img):
             img_pixels /= 255
             print('ok')
             try:
-                obj = DeepFace.analyze(img_path = "img5.jpg", actions = ['age', 'gender', 'race', 'emotion'])
+                obj = DeepFace.analyze(img_path = "{}/img5.jpg".format(curdir), actions = ['age', 'gender', 'race', 'emotion'])
             except :
                 cv2.putText(img, 'Face', (int(x), int(y)), cv2.FONT_HERSHEY_TRIPLEX , 1, (0, 0, 255), 2)
                 resized_img = cv2.resize(img, (1000, 700))
-                cv2.imwrite('imgout.jpg',img)
+                cv2.imwrite('{}/imgout.jpg'.format(curdir),img)
                 resized_img = cv2.resize(img, (1000, 700))
                 return img, 1, 0
             print("fdfd{}")
@@ -67,7 +68,7 @@ def analyze(img):
             #cv2.imwrite('imgout.jpg',img)
             
         resized_img = cv2.resize(img, (1000, 700))
-        cv2.imwrite('imgout.jpg',img)
+        cv2.imwrite('{}/imgout.jpg'.format(curdir),img)
         resized_img = cv2.resize(img, (1000, 700))
         return resized_img, predicted_emotion,1
     else:

@@ -17,6 +17,8 @@ from preprocessing import ssd_vgg_preprocessing
 import visualization
 import cv2
 
+curdir=os.path.abspath(os.getcwd())
+
 gpu_options = tf.GPUOptions(allow_growth=True)
 config = tf.ConfigProto(log_device_placement=False, gpu_options=gpu_options)
 isess = tf.InteractiveSession(config=config)
@@ -38,7 +40,7 @@ with slim.arg_scope(ssd_net.arg_scope(data_format=data_format)):
 
 # Restore SSD model.
 #ckpt_filename = 'C:/Users/user/Desktop/LASTONE/model.ckpt-141310'
-ckpt_filename = '/tmp/model.ckpt-141310'
+ckpt_filename = '{}/model.ckpt-141310'.format(curdir)
 
 
 #with tf.Session() as sess:
@@ -49,7 +51,7 @@ isess.run(tf.global_variables_initializer())
 
 #saver = tf.train.Saver()
 #saver = tf.compat.v1.train.import_meta_graph('C:/Users/user/Desktop/LASTONE/model.ckpt-141310.meta')
-saver = tf.compat.v1.train.import_meta_graph('/tmp/model.ckpt-141310.meta')
+saver = tf.compat.v1.train.import_meta_graph('{}/model.ckpt-141310.meta'.format(curdir))
 
 
 saver.restore(isess, ckpt_filename)
@@ -76,23 +78,5 @@ def process_image(img, select_threshold=0.6, nms_threshold=.15, net_shape=(300, 
     rbboxes = np_methods.bboxes_resize(rbbox_img, rbboxes)
     return rclasses, rscores, rbboxes
 
-"""
-# Test on some demo image and visualize output.
-#path = 'C:/Users/user/Desktop/ProjetIA/images/test/guns/'
-path = 'C:/Users/user/Desktop/ProjetIA/images/test/guns/'
-
-image_names = sorted(os.listdir(path))
-image_names
-
-#img=cv2.imread("C:/Users/user/Desktop/ProjetIA/img4.jpg")
-img=cv2.imread("/tmp/img4.jpg")
 
 
-#img = mpimg.imread(path + image_names[-2])
-#img = cv2.imread(path + image_names[-3])
-img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
-print(img)
-rclasses, rscores, rbboxes =  process_image(img)
-
-visualization.plt_bboxes(img, rclasses, rscores, rbboxes)
-"""

@@ -2,6 +2,8 @@ import speech_recognition as sr
 import requests
 from time import sleep
 import streamlit as st
+import os
+curdir=os.path.abspath(os.getcwd())
 
 def takeCommand():
     #st.write('start')
@@ -14,7 +16,7 @@ def takeCommand():
         r.pause_threshold = 1
         audio = r.listen(source,timeout=300)
         # write audio to a WAV file
-        with open("/tmp/microphone-results.wav", "wb") as f:          
+        with open("{}/microphone-results.wav".format(curdir), "wb") as f:          
             f.write(audio.get_wav_data())
         st.write('record finished')
     
