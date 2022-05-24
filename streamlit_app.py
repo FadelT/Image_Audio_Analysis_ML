@@ -187,6 +187,7 @@ def audiorec_demo_app():
             if rclasses.shape[0]>0:
                 st.write('It seems that there is dangerous thing such as Knive or Gun or Blood in it. I am not sure, I am still learning')
         elif result==1 and c==0:
+            st.write('{}'.format(rclasses))
             if rclasses.shape[0]==0:
               st.write("There's a human face but I don't know his emotions")
               st.image('{}/imgout.jpg'.format(curdir))
